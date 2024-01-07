@@ -1,0 +1,67 @@
+version: '3'
+
+services:
+  # Nginx Service
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+#    volumes:
+#      - ./public:/var/www/html
+    volumes:
+    - ./nginx:/etc/nginx/conf.d
+    - ./:/var/www/html
+    depends_on:
+      - php
+    networks:
+      - app-network
+
+  # PHP Service
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - app-network
+
+  # MySQL Service
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: supply_manager
+      MYSQL_USER: db_admin
+      MYSQL_PASSWORD: db_admin_123
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - app-network
+
+  # Redis Service
+  redis:
+    image: redis:latest
+    networks:
+      - app-network
+
+  # RabbitMQ Service
+  rabbitmq:
+    image: rabbitmq:3-management
+    environment:
+      RABBITMQ_DEFAULT_USER: root
+      RABBITMQ_DEFAULT_PASS: root
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - app-network
+
+# Volumes
+volumes:
+  mysql-data:
+
+# Networks
+networks:
+  app-network:
+    driver: bridge

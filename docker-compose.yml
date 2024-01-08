@@ -6,8 +6,6 @@ services:
     image: nginx:latest
     ports:
       - "80:80"
-#    volumes:
-#      - ./public:/var/www/html
     volumes:
     - ./nginx:/etc/nginx/conf.d
     - ./:/var/www/html
@@ -26,16 +24,19 @@ services:
     networks:
       - app-network
 
-  # MySQL Service
+# MySQL Service
   mysql:
     image: mysql:latest
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_ROOT_PASSWORD: root # Change for production
       MYSQL_DATABASE: supply_manager
-      MYSQL_USER: db_admin
-      MYSQL_PASSWORD: db_admin_123
+      MYSQL_USER: root     # Non-root user for the application
+      MYSQL_PASSWORD: root # Strong password for the non-root user
+    ports:
+      - "3306:3306"
     volumes:
       - mysql-data:/var/lib/mysql
+      - ./mysql:/etc/mysql/conf.d
     networks:
       - app-network
 

@@ -17,10 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', 'AuthController@login');
 Route::post('/logout', 'AuthController@logout');
 
-Route::group(['prefix' => 'order'], function() {
+Route::group(['prefix' => 'order', 'middleware' => 'tokenVerifyMiddleware' ] , function() {
   Route::post('/', 'OrderController@createOrder');
   Route::get('/list', 'OrderController@getAllOrders');
   Route::post('/{orderId}', 'OrderController@getOrder');
-
-
-})->middleware('token') ;
+});

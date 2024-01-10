@@ -46,6 +46,18 @@ class TokenService extends Token
 
     }
 
+
+    public function verifyToken($token)
+    {
+        // Early Return
+        if(!$this->redisService->get($token)){
+            return false;
+        }
+
+        return true;
+    }
+
+
     /**
      * Invalidate a JWT token in Redis.
      *

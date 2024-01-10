@@ -28,19 +28,19 @@ abstract class AbstractRedisClient
         return $this->redis->get($key);
     }
 
-    public function set($key, $value, $expiration) : bool
+    public  function set($key, $value, $expiration) : bool
     {
         return $this->redis->setex($key, $value, $expiration);
     }
 
-    public function delete($key) : bool
+    public  function delete($key) : bool
     {
         return $this->redis->del($key);
     }
 
-    public function close() : bool
+    protected  function close() : bool
     {
-        $this->redis->close();
+       return  $this->redis->close();
     }
 
     public function __destruct()

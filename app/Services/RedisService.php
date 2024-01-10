@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
-use App\Abstract\RedisClient;
+use App\Abstract\AbstractRedisClient;
 
-class RedisService extends RedisClient
+class RedisService extends AbstractRedisClient
 {
     public function __construct()
     {

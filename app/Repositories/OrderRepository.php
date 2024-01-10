@@ -2,14 +2,14 @@
 
 namespace App\Repositories;
 
-use App\Interfaces\OrderRepositoryInterface;
+use App\Contracts\Repositories\OrderRepositoryInterface;
 use App\Models\Order;
 
 class OrderRepository implements OrderRepositoryInterface
 {
-    public function getAllOrders()
+    public function getAllOrders($page = null, $perPage = null)
     {
-        return Order::all();
+        return Order::all()->forPage($page,$perPage);
     }
 
     public function getOrderById($orderId)

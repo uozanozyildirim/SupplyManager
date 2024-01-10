@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Services\TokenService;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
